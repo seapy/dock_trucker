@@ -1,12 +1,14 @@
-# Volume Backup
+# Dock Trucker
 
 Docker Volume container auto backup and send to cloud
 
+`Dock Trucker` container only one run and forgot it.
+
 * run with `--volumes-from` and that volume container will be backup
 * default only backup your host
-* TODO : old file delete. file exists days read from args or ENV?... or volume cotainers ENV(wow!)
-* TODO : sync to s3(aws cmd or aws ruby sdk). API_KEY, S3 PATH from ENV
-* TODO : run with cron. `volume backup` container only one run and forgot it.
+* old file delete
+* sync to s3
+* backup every day
 
 
 # Run
@@ -22,12 +24,15 @@ $ docker run -it --rm \
     -e AWS_DEFAULT_REGION=us-east-1 \
     -e S3_PATH=s3_bucketname_or_path \
     -e OLDFILE_PRESERVE_DAYS=14 \
-    seapy/volume-backup
+    seapy/dock-trucker
 ```
 
 add `--volumes-from` for backup volume container
 
-if your volumes is `/backup` it's not works...
+## CONS
+
+* if your volumes is `/backup` it's not works...
+* AWS S3 Region works only `us-east-1`. `aws-cli` problem
 
 
 ## Backup Dir
@@ -62,7 +67,7 @@ result backup tree like this
 ## Build
 
 ```
-$ docker build -t seapy/volume-backup .
+$ docker build -t seapy/dock-trucker .
 ```
 
 ## in Development
@@ -77,7 +82,7 @@ $ docker run -it --rm \
     -v /Users/seapy/backup:/backup \
     -v /Users/seapy/Documents/Docker/volume_backup:/app \
     --volumes-from backup1 \
-    seapy/volume-backup \
+    seapy/dock-trucker \
     /bin/bash
 
 $ bundle exec ruby entry.rb
