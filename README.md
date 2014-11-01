@@ -16,7 +16,7 @@ Docker Volume container auto backup and send to cloud
 # Run
 
 ```
-$ docker run -it --rm \
+$ docker run -d --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /your/host/backup/dir:/backup \
     --volumes-from backup1 \
