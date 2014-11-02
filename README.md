@@ -12,6 +12,10 @@ Docker Volume container auto backup and sync to cloud
 * sync to s3
 * backup every day
 
+[![Youtube](http://img.youtube.com/vi/peqidRTwTEs/0.jpg)](http://youtu.be/peqidRTwTEs)
+
+[slide](http://slides.com/seapy/dock-trucker)
+
 
 # Run
 
