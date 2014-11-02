@@ -2,7 +2,7 @@
 
 ![Dock Trucker](images/dock-trucker-logo.png "Dock Trucker")
 
-Docker Volume container auto backup and send to cloud
+Docker Volume container auto backup and sync to cloud
 
 `Dock Trucker` container only one run and forgot it.
 
