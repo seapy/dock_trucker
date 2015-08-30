@@ -20,7 +20,7 @@ Docker Volume container auto backup and sync to cloud
 # Run
 
 ```
-$ docker run -d --rm \
+$ docker run -d \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /your/host/backup/dir:/backup \
     --volumes-from backup1 \
@@ -34,6 +34,22 @@ $ docker run -d --rm \
 ```
 
 add `--volumes-from` for backup volume container
+
+## Exmaple 
+
+```
+$ docker run -d \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /home/ubuntu/backup:/backup \
+    --volumes-from pg-data \
+    --volumes-from rails-uploads \
+    -e AWS_ACCESS_KEY_ID=xxxx \
+    -e AWS_SECRET_ACCESS_KEY=yyyy \
+    -e AWS_DEFAULT_REGION=us-east-1 \
+    -e S3_PATH=seapy-bucket/rails \
+    -e OLDFILE_PRESERVE_DAYS=14 \
+    seapy/dock-trucker
+```
 
 ## CONS
 
