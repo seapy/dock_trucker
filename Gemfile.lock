@@ -7,18 +7,16 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    archive-tar-minitar (0.5.2)
     awesome_print (1.2.0)
     clockwork (1.0.0)
       activesupport
       tzinfo
-    docker-api (1.13.6)
-      archive-tar-minitar
+    docker-api (1.24.1)
       excon (>= 0.38.0)
       json
-    excon (0.40.0)
+    excon (0.45.4)
     i18n (0.6.11)
-    json (1.8.1)
+    json (1.8.3)
     minitest (5.4.2)
     thread_safe (0.3.4)
     tzinfo (1.2.2)
@@ -31,3 +29,6 @@ DEPENDENCIES
   awesome_print
   clockwork
   docker-api
+
+BUNDLED WITH
+   1.10.6

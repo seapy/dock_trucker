@@ -9,7 +9,7 @@ Docker Volume container auto backup and sync to cloud
 * run with `--volumes-from` and that volume container will be backup
 * default only backup your host
 * old file delete
-* sync to s3
+* sync to s3, rsync
 * backup every day
 
 [![Youtube](http://img.youtube.com/vi/peqidRTwTEs/0.jpg)](http://youtu.be/peqidRTwTEs)
@@ -28,7 +28,8 @@ $ docker run -d \
     -e AWS_ACCESS_KEY_ID=yourkeyid \
     -e AWS_SECRET_ACCESS_KEY=youraccesskey \
     -e AWS_DEFAULT_REGION=us-east-1 \
-    -e S3_PATH=s3_bucketname_or_path \
+    -e STORE_NAME=store name \
+    -e STORE_PATH=s3_bucketname_or_path \
     -e OLDFILE_PRESERVE_DAYS=14 \
     seapy/dock-trucker
 ```
@@ -46,7 +47,8 @@ $ docker run -d \
     -e AWS_ACCESS_KEY_ID=xxxx \
     -e AWS_SECRET_ACCESS_KEY=yyyy \
     -e AWS_DEFAULT_REGION=us-east-1 \
-    -e S3_PATH=seapy-bucket/rails \
+    -e STORE_NAME=s3 \
+    -e STORE_PATH=seapy-bucket/rails \
     -e OLDFILE_PRESERVE_DAYS=14 \
     seapy/dock-trucker
 ```
@@ -99,13 +101,31 @@ for only source code change
 change `/Users/seapy` to your directory
 
 ```
+$ docker run --name dock_trucker-test-backup1 \
+    -v /data \
+    busybox
+
+$ docker run --name dock_trucker-test-backup2 \
+    -v /data2 \
+    busybox
+```
+
+```
 $ docker run -it --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /Users/seapy/backup:/backup \
-    -v /Users/seapy/Documents/Docker/volume_backup:/app \
-    --volumes-from backup1 \
-    seapy/dock-trucker \
+    -v /Users/seapy/Documents/docker/dock_trucker:/app \
+    --volumes-from dock_trucker-test-backup1 \
+    --volumes-from dock_trucker-test-backup2 \
+    seapy/ruby:2.2.0 \
     /bin/bash
-
-$ bundle exec ruby entry.rb
+$ apt-get install -y awscli
+$ export AWS_ACCESS_KEY_ID="xxxx" \
+export AWS_SECRET_ACCESS_KEY="yyyy" \
+export AWS_DEFAULT_REGION=us-east-1 \
+export STORE_PATH=seapy-tmp/dock_trucker_test
+$ cd /app
+$ bundle install
+$ ./run.sh s3
 ```
+

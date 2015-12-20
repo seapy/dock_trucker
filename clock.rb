@@ -2,6 +2,6 @@ require 'clockwork'
 
 module Clockwork
   every(1.day, 'backup.job') {
-    `bundle exec ruby entry.rb`
+    `./run.sh #{ENV['STORE_NAME']}`
   }
 end
