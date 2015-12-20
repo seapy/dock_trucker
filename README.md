@@ -19,24 +19,7 @@ Docker Volume container auto backup and sync to cloud
 
 # Run
 
-```
-$ docker run -d \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /your/host/backup/dir:/backup \
-    --volumes-from backup1 \
-    --volumes-from backup2 \
-    -e AWS_ACCESS_KEY_ID=yourkeyid \
-    -e AWS_SECRET_ACCESS_KEY=youraccesskey \
-    -e AWS_DEFAULT_REGION=us-east-1 \
-    -e STORE_NAME=store name \
-    -e STORE_PATH=s3_bucketname_or_path \
-    -e OLDFILE_PRESERVE_DAYS=14 \
-    seapy/dock-trucker
-```
-
 add `--volumes-from` for backup volume container
-
-## Exmaple 
 
 ### S3 Store
 
@@ -48,12 +31,22 @@ $ docker run -d \
     --volumes-from rails-uploads \
     -e OLDFILE_PRESERVE_DAYS=14 \
     -e STORE_NAME=s3 \
-    -e S3_PATH=seapy-bucket/rails \
+    -e S3_PATH=seapy-bucket/backup \
     -e AWS_ACCESS_KEY_ID=xxxx \
     -e AWS_SECRET_ACCESS_KEY=yyyy \
     -e AWS_DEFAULT_REGION=us-east-1 \
     seapy/dock-trucker
 ```
+
+* STORE_NAME
+    * `s3`
+* S3_PATH
+    * bucket and path
+    * `bucket_name/path`
+* AWS_ACCESS_KEY_ID
+* AWS_SECRET_ACCESS_KEY
+* AWS_DEFAULT_REGION
+    * `us-east-1`, another regions is not works
 
 ### Rsync Store
 
@@ -66,9 +59,38 @@ $ docker run -d \
     -e OLDFILE_PRESERVE_DAYS=14 \
     -e STORE_NAME=rsync \
     -e RSYNC_OPTIONS="-azrL --delete" \
-    -e RSYNC_DEST_PATH="example.com:/backup/path" \
+    -e RSYNC_DEST_PATH="example.com:/mybackup/path" \
     seapy/dock-trucker
 ```
+
+* STORE_NAME
+    * `rsync`
+* RSYNC_OPTIONS
+    * rsync command options like `-avz`, `-aL` or `-azrL --delete`. default value is `-azrL --delete`
+* RSYNC_DEST_PATH
+    * rsync destination path like `example.com:/mybackup/path`
+
+### Dropbox Store
+
+```
+$ docker run -d \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /home/ubuntu/backup:/backup \
+    --volumes-from pg-data \
+    --volumes-from rails-uploads \
+    -e OLDFILE_PRESERVE_DAYS=14 \
+    -e STORE_NAME=dropbox \
+    -e DROPBOX_PATH="mybackup/path" \
+    -v /home/ubuntu/.dropbox_uploader:/root/.dropbox_uploader \
+    seapy/dock-trucker
+```
+
+* STORE_NAME
+    * `dropbox`
+* DROPBOX_PATH
+    * your dropbox path to backup
+* `/root/.dropbox_uploader`
+    * need for dropbox link. see [more information](https://github.com/andreafabrizi/Dropbox-Uploader)
 
 ## CONS
 
@@ -137,12 +159,7 @@ $ docker run -it --rm \
     seapy/ruby:2.2.0 \
     /bin/bash
 $ apt-get install -y awscli
-$ export AWS_ACCESS_KEY_ID="xxxx" \
-export AWS_SECRET_ACCESS_KEY="yyyy" \
-export AWS_DEFAULT_REGION=us-east-1 \
-export STORE_PATH=seapy-tmp/dock_trucker_test
 $ cd /app
 $ bundle install
-$ ./run.sh s3
 ```
 
