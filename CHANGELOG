@@ -1,0 +1,10 @@
+Revision history for DockTrucker
+
+1.0.0 2015-12-20
+
+  * Add rsync, dropbox store option
+  * Ruby version up to 2.2.0
+
+ 2014-11-11
+
+  * First release
