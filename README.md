@@ -35,7 +35,7 @@ $ docker run -d \
     -e AWS_ACCESS_KEY_ID=xxxx \
     -e AWS_SECRET_ACCESS_KEY=yyyy \
     -e AWS_DEFAULT_REGION=us-east-1 \
-    seapy/dock-trucker
+    seapy/dock-trucker:1.0.0
 ```
 
 * STORE_NAME
@@ -60,7 +60,7 @@ $ docker run -d \
     -e STORE_NAME=rsync \
     -e RSYNC_OPTIONS="-azrL --delete" \
     -e RSYNC_DEST_PATH="example.com:/mybackup/path" \
-    seapy/dock-trucker
+    seapy/dock-trucker:1.0.0
 ```
 
 * STORE_NAME
@@ -82,7 +82,7 @@ $ docker run -d \
     -e STORE_NAME=dropbox \
     -e DROPBOX_PATH="mybackup/path" \
     -v /home/ubuntu/.dropbox_uploader:/root/.dropbox_uploader \
-    seapy/dock-trucker
+    seapy/dock-trucker:1.0.0
 ```
 
 * STORE_NAME
@@ -130,7 +130,7 @@ result backup tree like this
 ## Build
 
 ```
-$ docker build -t seapy/dock-trucker .
+$ docker build -t seapy/dock-trucker:1.0.0 .
 ```
 
 ## in Development
