@@ -38,18 +38,35 @@ add `--volumes-from` for backup volume container
 
 ## Exmaple 
 
+### S3 Store
+
 ```
 $ docker run -d \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /home/ubuntu/backup:/backup \
     --volumes-from pg-data \
     --volumes-from rails-uploads \
+    -e OLDFILE_PRESERVE_DAYS=14 \
+    -e STORE_NAME=s3 \
+    -e S3_PATH=seapy-bucket/rails \
     -e AWS_ACCESS_KEY_ID=xxxx \
     -e AWS_SECRET_ACCESS_KEY=yyyy \
     -e AWS_DEFAULT_REGION=us-east-1 \
-    -e STORE_NAME=s3 \
-    -e STORE_PATH=seapy-bucket/rails \
+    seapy/dock-trucker
+```
+
+### Rsync Store
+
+```
+$ docker run -d \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /home/ubuntu/backup:/backup \
+    --volumes-from pg-data \
+    --volumes-from rails-uploads \
     -e OLDFILE_PRESERVE_DAYS=14 \
+    -e STORE_NAME=rsync \
+    -e RSYNC_OPTIONS="-azrL --delete" \
+    -e RSYNC_DEST_PATH="example.com:/backup/path" \
     seapy/dock-trucker
 ```
 
