@@ -3,7 +3,7 @@ module DockTrucker
     class S3
       attr_accessor :origin_path, :store_path
 
-      def initialize(store_path: ENV['STORE_PATH'])
+      def initialize(store_path: ENV['S3_PATH'])
         self.store_path = store_path
       end
 
