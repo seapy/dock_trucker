@@ -9,7 +9,7 @@ Docker Volume container auto backup and sync to cloud
 * run with `--volumes-from` and that volume container will be backup
 * default only backup your host
 * old file delete
-* sync to s3, rsync
+* sync to s3, rsync, dropbox
 * backup every day
 
 [![Youtube](http://img.youtube.com/vi/peqidRTwTEs/0.jpg)](http://youtu.be/peqidRTwTEs)
